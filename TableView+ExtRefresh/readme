@@ -1,0 +1,33 @@
+****************************使用帮助***************************
+上拉刷新和下拉刷新（tableView的扩展）
+
+1.#import "UITableView+statebar.h"
+
+2.实现 MZQFooterViewDelegate,MZQHeaderViewDelegate 一个是上拉刷新，一个是下拉刷新
+
+3.使用自己创建的tableView调用下列方法，并设置代理
+        [self.tableView addHeaderView];
+        self.tableView.headerView.delegate = self;
+        [self.tableView addFooterView];
+        self.tableView.footerView.delegate = self;
+
+
+4.实现下面的方法，请求网络加载数据内容写在方法里面
+        -(void)headerViewDelegate:(MZQHeaderView *)headerView state:(MZQStateViewState)state
+        -(void)footerViewState:(MZQFooterView *)footerView state:(MZQStateViewState)state
+
+
+5.网络数据加载完成后，不要忘了调用finish方法
+        [self.tableView headerViewFinish];
+        [self.tableView footerViewFinish];
+
+
+此外，如果需要更改默认文字，使用tableView调用下列方法即可更改
+
+//    [self.tableView.headerView setTitle:@"下拉我" headerState:MZQHeaderViewStateBeginDrag];      //开始下拉状态
+//    [self.tableView.headerView setTitle:@"手拿开" headerState:MZQHeaderViewStateDragging];       //下拉完成
+//    [self.tableView.headerView setTitle:@"玩命刷新咯" headerState:MZQHeaderViewStateRefresh];     //正在刷新
+
+//    [self.tableView.footerView setTitle:@"拖我" footerState:MZQFooterViewStateBeginDrag];       //开始上拉
+//    [self.tableView.footerView setTitle:@"把手撒开" footerState:MZQFooterViewStateDragging];     //上拉完成
+//    [self.tableView.footerView setTitle:@"玩命加载中" footerState:MZQFooterViewStateLoading];    //正在加载
